@@ -141,11 +141,12 @@ class EccubeExtension extends AbstractExtension
      */
     public function getPriceFilter($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
     {
-        $locale = $this->eccubeConfig['locale'];
-        $currency = $this->eccubeConfig['currency'];
-        $formatter = new \NumberFormatter($locale, \NumberFormatter::CURRENCY);
-
-        return $formatter->formatCurrency($number, $currency);
+//        $locale = $this->eccubeConfig['locale'];
+//        $currency = $this->eccubeConfig['currency'];
+//        $formatter = new \NumberFormatter($locale, \NumberFormatter::CURRENCY);
+//
+//        return $formatter->formatCurrency($number, $currency);
+        return $number;
     }
 
     /**
@@ -231,7 +232,7 @@ class EccubeExtension extends AbstractExtension
             return call_user_func_array($function, $arg_list);
         }
 
-        trigger_error('Called to an undefined function : php_'.$function, E_USER_WARNING);
+        trigger_error('Called to an undefined function : php_' . $function, E_USER_WARNING);
 
         return null;
     }
@@ -265,16 +266,16 @@ class EccubeExtension extends AbstractExtension
             if ($ClassCategory2 && !$ClassCategory2->isVisible()) {
                 continue;
             }
-            $class_category_id1 = $ClassCategory1 ? (string) $ClassCategory1->getId() : '__unselected2';
-            $class_category_id2 = $ClassCategory2 ? (string) $ClassCategory2->getId() : '';
-            $class_category_name2 = $ClassCategory2 ? $ClassCategory2->getName().($ProductClass->getStockFind() ? '' : trans('front.product.out_of_stock_label')) : '';
+            $class_category_id1 = $ClassCategory1 ? (string)$ClassCategory1->getId() : '__unselected2';
+            $class_category_id2 = $ClassCategory2 ? (string)$ClassCategory2->getId() : '';
+            $class_category_name2 = $ClassCategory2 ? $ClassCategory2->getName() . ($ProductClass->getStockFind() ? '' : trans('front.product.out_of_stock_label')) : '';
 
             $class_categories[$class_category_id1]['#'] = [
                 'classcategory_id2' => '',
                 'name' => trans('common.select'),
                 'product_class_id' => '',
             ];
-            $class_categories[$class_category_id1]['#'.$class_category_id2] = [
+            $class_categories[$class_category_id1]['#' . $class_category_id2] = [
                 'classcategory_id2' => $class_category_id2,
                 'name' => $class_category_name2,
                 'stock_find' => $ProductClass->getStockFind(),
@@ -286,9 +287,9 @@ class EccubeExtension extends AbstractExtension
                 'price02_with_currency' => $this->getPriceFilter($ProductClass->getPrice02()),
                 'price01_inc_tax_with_currency' => $ProductClass->getPrice01() === null ? '' : $this->getPriceFilter($ProductClass->getPrice01IncTax()),
                 'price02_inc_tax_with_currency' => $this->getPriceFilter($ProductClass->getPrice02IncTax()),
-                'product_class_id' => (string) $ProductClass->getId(),
+                'product_class_id' => (string)$ProductClass->getId(),
                 'product_code' => $ProductClass->getCode() === null ? '' : $ProductClass->getCode(),
-                'sale_type' => (string) $ProductClass->getSaleType()->getId(),
+                'sale_type' => (string)$ProductClass->getSaleType()->getId(),
             ];
         }
 
@@ -344,7 +345,7 @@ class EccubeExtension extends AbstractExtension
         }
 
         $attr['class'] = isset($attr['class'])
-            ? $attr['class']." fa {$class}"
+            ? $attr['class'] . " fa {$class}"
             : "fa {$class}";
 
         $html = '<i ';
